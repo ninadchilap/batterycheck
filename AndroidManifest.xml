@@ -25,6 +25,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
+               
             </intent-filter>
         </receiver>
         <service android:name="DetectPowerConnectedService"></service>

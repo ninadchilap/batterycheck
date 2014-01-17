@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 
 public class DetectPowerConnectedStateRecevier extends BroadcastReceiver {
+	
+
+	 
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		
 		String action = intent.getAction();
-
+           
 		// Test for power connected
 		if(action.equals(Intent.ACTION_POWER_CONNECTED)) {
 			

@@ -36,8 +36,9 @@ public class DetectPowerConnectedService extends Service {
 	@Override
 	public void onCreate() {
 		
-		mySQLiteAdapter = new SQLiteAdapter(this);
 		super.onCreate();
+		mySQLiteAdapter = new SQLiteAdapter(this);
+		
 	}
  
 	@Override
