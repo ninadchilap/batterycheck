@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class BatteryCheck extends Activity {
 
 	
-	static TextView batteryInfo;
+//	static TextView batteryInfo;
 	private ImageView imageBatteryState;
 	private TextView batterypercent;
 	private TextView charging;
@@ -28,30 +28,34 @@ public class BatteryCheck extends Activity {
 	Cursor cursor;
 	Calendar today;
 	ListView listContent;
+	static int level;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		batteryInfo = ((TextView) findViewById(R.id.textViewBatteryInfo));
+		/* Initialization of all the objects of widgets */
+		
+		//batteryInfo = ((TextView) findViewById(R.id.textViewBatteryInfo));
 		imageBatteryState = (ImageView) findViewById(R.id.imageViewBatteryState);
 		batterypercent = (TextView) findViewById(R.id.batterypercent);
 		charging = (TextView) findViewById(R.id.charging);
 		listContent = (ListView) findViewById(R.id.listView);
 
 		today = Calendar.getInstance();
-		batteryInfo
+		/*batteryInfo
 				.setText("Time is" + today.get(Calendar.HOUR) + ":"
 						+ today.get(Calendar.MINUTE) + ":"
-						+ today.get(Calendar.SECOND));
+						+ today.get(Calendar.SECOND));*/
 
+	/* initialization of SQLite adapter */
 		mySQLiteAdapter = new SQLiteAdapter(this);
 		mySQLiteAdapter.openToWrite();
-		System.out.println("before insert");
+		
 
-		// updateList();
-		System.out.println("after insert");
+		 //updateList();
+		
 		cursor = mySQLiteAdapter.queueAll();
 		String[] from = new String[] { SQLiteAdapter.TIME_IN,
 				SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
@@ -63,48 +67,69 @@ public class BatteryCheck extends Activity {
 				from, to);
 		listContent.setAdapter(cursorAdapter);
 
-		getBatteryPercentage();
-
-	}
-
-	// method for getting the battery details
-
-	private void getBatteryPercentage() {
-		BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
-			public void onReceive(Context context, Intent intent) {
-				context.unregisterReceiver(this);
-				
-				int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
-						0);
-				/*int currentLevel = intent.getIntExtra(
-						BatteryManager.EXTRA_LEVEL, -1);
-				
-				int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-				int level = -1;
-				if (currentLevel >= 0 && scale > 0) {
-					level = (currentLevel * 100) / scale;
-				}*/
-				int level1 = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-
-				batterypercent.setText("Battery Level Remaining: " + level1
-						+ "%");
-
-				if (plugged == 1 || plugged == 2) {
-					charging.setText("Charging: YES");
-
-				} else if (plugged == 0) {
-					charging.setText("Charging: NO");
-
-				}
-
-			}
-		};
+		
+		
+		
+	/*	
 		IntentFilter batteryLevelFilter = new IntentFilter(
 				Intent.ACTION_BATTERY_CHANGED);
-		registerReceiver(batteryLevelReceiver, batteryLevelFilter);
-	}
+		registerReceiver(batteryLevelReceiver, batteryLevelFilter);*/
+		
+	this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-	// ------------------------------------------//
+
+	}
+	
+	 public void updateList() {
+			cursor.requery();
+		}
+	
+	
+	BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent) {
+			
+			
+			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
+					0);
+			 int  health= intent.getIntExtra(BatteryManager.EXTRA_HEALTH,0);
+	            int  icon_small= intent.getIntExtra(BatteryManager.EXTRA_ICON_SMALL,0);
+	          
+	           //  boolean  present= intent.getExtras().getBoolean(BatteryManager.EXTRA_PRESENT);
+	            int  scale= intent.getIntExtra(BatteryManager.EXTRA_SCALE,0);
+	            int  status= intent.getIntExtra(BatteryManager.EXTRA_STATUS,0);
+	            String  technology= intent.getExtras().getString(BatteryManager.EXTRA_TECHNOLOGY);
+	         
+	            int  voltage= intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE,0);
+			/*int currentLevel = intent.getIntExtra(
+					BatteryManager.EXTRA_LEVEL, -1);
+			
+			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+			int level = -1;
+			if (currentLevel >= 0 && scale > 0) {
+				level = (currentLevel * 100) / scale;
+			}*/
+			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+
+			batterypercent.setText(level
+					+ "%");
+
+			if (plugged == 1 || plugged == 2) {
+				charging.setText("Charging: YES");
+				
+				
+				updateList();
+				//updateList();
+				
+
+			} else if (plugged == 0) {
+				charging.setText("Charging: NO");
+				updateList();
+
+			}
+
+		}
+	};
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

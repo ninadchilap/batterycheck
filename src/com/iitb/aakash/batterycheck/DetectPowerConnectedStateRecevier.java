@@ -20,6 +20,7 @@ public class DetectPowerConnectedStateRecevier extends BroadcastReceiver {
 	    	Intent i = new Intent(context, DetectPowerConnectedService.class);
 			context.startService(i);
 			
+			
 	    } // if(action.equals(Intent.ACTION_POWER_CONNECTED)) 
 	    
 	    // Test for power disconnected
