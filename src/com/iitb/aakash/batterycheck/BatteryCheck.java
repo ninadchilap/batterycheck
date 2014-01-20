@@ -24,7 +24,8 @@ public class BatteryCheck extends Activity {
 	 * private TextView charging;
 	 */
 
-	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,txtPercentage;
+	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,
+			txtPercentage;
 	private SQLiteAdapter mySQLiteAdapter;
 	SimpleCursorAdapter cursorAdapter;
 	Cursor cursor;
@@ -54,7 +55,6 @@ public class BatteryCheck extends Activity {
 		txtVolt = (TextView) findViewById(R.id.txtVoltage);
 		txtTech = (TextView) findViewById(R.id.txtTechnology);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
-
 
 		listContent = (ListView) findViewById(R.id.listView);
 
@@ -101,9 +101,7 @@ public class BatteryCheck extends Activity {
 
 			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
 			int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
-			int icon_small = intent.getIntExtra(
-					BatteryManager.EXTRA_ICON_SMALL, 0);
-
+			
 			// boolean present=
 			// intent.getExtras().getBoolean(BatteryManager.EXTRA_PRESENT);
 			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
@@ -124,20 +122,18 @@ public class BatteryCheck extends Activity {
 			 */
 			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
-			/*
-			 * batterypercent.setText(level + "%");
-			 */
+
 			txtHealth.setText("Health: " + health);
 			txtTemp.setText("Temperature: " + temperature);
 			txtVolt.setText("Voltage: " + voltage + "mAh");
 			txtTech.setText("Technology: " + technology);
-			txtPercentage.setText(level+ "%");
-			
+			txtPercentage.setText(level + "%");
+
 			if (plugged == 1 || plugged == 2) {
 				txtStatus.setText("Status: Charging");
 
 				updateList();
-				// updateList();
+	
 
 			} else if (plugged == 0) {
 				txtStatus.setText("Status: Not Charging");

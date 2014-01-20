@@ -161,17 +161,17 @@ public class DetectPowerDisconnectedService extends Service {
 						0);
 				level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
+				String curTime = String.format("%02d:%02d:%02d",
+						today.get(Calendar.HOUR), today.get(Calendar.MINUTE),
+						today.get(Calendar.SECOND));
+				String curDate = String.format("%02d-%02d-%02d",
+						today.get(Calendar.DATE), today.get(Calendar.MONTH)+1,
+						today.get(Calendar.YEAR));
+
 				if (plugged == 0) {
 
-					mySQLiteAdapter.update_byID(
-							countingid.count,
-							today.get(Calendar.HOUR) + ":"
-									+ today.get(Calendar.MINUTE) + ":"
-									+ today.get(Calendar.SECOND),
-							"" + level,
-							today.get(Calendar.DATE) + "-"
-									+ today.get(Calendar.MONTH) + "-"
-									+ today.get(Calendar.YEAR));
+					mySQLiteAdapter.update_byID(countingid.count, curTime, ""
+							+ level, curDate);
 
 					updateList();
 					// updateList();

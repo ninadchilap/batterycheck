@@ -102,21 +102,21 @@ public class DetectPowerConnectedService extends Service {
 				// Instantiate the notification
 				Notification notification = new Notification(
 						R.drawable.ic_launcher, // The resource id of the icon
-												// to put in the status bar.
+						// to put in the status bar.
 						bundle.getString("ticker_text"), // The text that flows
-															// by in the status
-															// bar when the
-															// notification
-															// first activates.
+						// by in the status
+						// bar when the
+						// notification
+						// first activates.
 						System.currentTimeMillis()); // The time to show in the
-														// time field. In the
-														// System.currentTimeMillis
-														// timebase.
+				// time field. In the
+				// System.currentTimeMillis
+				// timebase.
 
 				// Set the expanded message and the intent to fire when the user
 				// clicks the expanded message
 				Intent notificationIntent = new Intent(getApplicationContext(), // Application
-																				// context.
+						// context.
 						BatteryCheck.class); // Activity to open.
 				PendingIntent contentIntent = PendingIntent.getActivity(
 						getApplicationContext(), 0, notificationIntent, 0);
@@ -167,16 +167,17 @@ public class DetectPowerConnectedService extends Service {
 				int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
 						0);
 				level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+				String curTime = String.format("%02d:%02d:%02d",
+						today.get(Calendar.HOUR), today.get(Calendar.MINUTE),
+						today.get(Calendar.SECOND));
+				String curDate = String.format("%02d-%02d-%02d",
+						today.get(Calendar.DATE), today.get(Calendar.MONTH)+1,
+						today.get(Calendar.YEAR));
 
 				if (plugged == 1 || plugged == 2) {
 
-					mySQLiteAdapter.insert(
-							today.get(Calendar.HOUR) + ":"
-									+ today.get(Calendar.MINUTE) + ":"
-									+ today.get(Calendar.SECOND), "-", ""
-									+ level, "-", today.get(Calendar.DATE)
-									+ "-" + today.get(Calendar.MONTH) + "-"
-									+ today.get(Calendar.YEAR), "-");
+					mySQLiteAdapter.insert(curTime, "-", "" + level, "-",
+							curDate, "-");
 					count++;
 
 					updateList();
