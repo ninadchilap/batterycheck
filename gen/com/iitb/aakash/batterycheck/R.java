@@ -21,24 +21,55 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int battery_empty=0x7f020000;
+        public static final int battery_green=0x7f020001;
+        public static final int battery_green_charging=0x7f020002;
+        public static final int battery_orange=0x7f020003;
+        public static final int battery_orange_charging=0x7f020004;
+        public static final int battery_red=0x7f020005;
+        public static final int battery_red_charging=0x7f020006;
+        public static final int battery_yellow=0x7f020007;
+        public static final int battery_yellow_charging=0x7f020008;
+        public static final int ic_launcher=0x7f020009;
+        public static final int icon=0x7f02000a;
+        public static final int reflect=0x7f02000b;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000a;
-        public static final int batterypercent=0x7f080006;
-        public static final int charging=0x7f080007;
-        public static final int imageViewBatteryState=0x7f080008;
-        public static final int listView=0x7f080009;
-        public static final int txt1=0x7f080000;
-        public static final int txt2=0x7f080001;
-        public static final int txt3=0x7f080002;
-        public static final int txt4=0x7f080003;
-        public static final int txt5=0x7f080004;
-        public static final int txt6=0x7f080005;
+        public static final int action_settings=0x7f08001c;
+        public static final int batterypercent=0x7f080018;
+        public static final int charging=0x7f080019;
+        public static final int colEndDate=0x7f080013;
+        public static final int colEndPercentage=0x7f080017;
+        public static final int colEndTime=0x7f080015;
+        public static final int colStartDate=0x7f080012;
+        public static final int colStartPercentage=0x7f080016;
+        public static final int colStartTime=0x7f080014;
+        public static final int imageView1=0x7f080000;
+        public static final int imageViewBatteryState=0x7f08001a;
+        public static final int imgBattery=0x7f08000a;
+        public static final int listView=0x7f08001b;
+        public static final int rowHeading=0x7f080011;
+        public static final int txt1=0x7f08000b;
+        public static final int txt2=0x7f08000c;
+        public static final int txt3=0x7f08000d;
+        public static final int txt4=0x7f08000e;
+        public static final int txt5=0x7f08000f;
+        public static final int txt6=0x7f080010;
+        public static final int txtHealth=0x7f080005;
+        public static final int txtInfo=0x7f080002;
+        public static final int txtLogs=0x7f080003;
+        public static final int txtPercentage=0x7f080009;
+        public static final int txtStatus=0x7f080004;
+        public static final int txtTechnology=0x7f080008;
+        public static final int txtTemperature=0x7f080006;
+        public static final int txtTitle=0x7f080001;
+        public static final int txtVoltage=0x7f080007;
     }
     public static final class layout {
-        public static final int list=0x7f030000;
-        public static final int main=0x7f030001;
+        public static final int info=0x7f030000;
+        public static final int list=0x7f030001;
+        public static final int logs=0x7f030002;
+        public static final int main=0x7f030003;
     }
     public static final class menu {
         public static final int battery_check=0x7f070000;
