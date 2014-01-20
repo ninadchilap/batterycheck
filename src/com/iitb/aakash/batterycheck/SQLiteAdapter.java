@@ -75,13 +75,13 @@ public class SQLiteAdapter {
 		sqLiteDatabase.delete(MYDATABASE_TABLE, KEY_ID + "=" + id, null);
 	}
 
-	public void update_byID(int id, String v1, String v2, String v3, String v4, String v5, String v6) {
+	public void update_byID(int id, String v2, String v4 , String v6) {
 		ContentValues values = new ContentValues();
-		values.put(TIME_IN, v1);
+		//values.put(TIME_IN, v1);
 		values.put(TIME_OUT, v2);
-		values.put(START_PER, v3);
+		//values.put(START_PER, v3);
 		values.put(END_PER, v4);
-		values.put(START_DATE, v5);
+		//values.put(START_DATE, v5);
 		values.put(END_DATE, v6);
 		sqLiteDatabase
 				.update(MYDATABASE_TABLE, values, KEY_ID + "=" + id, null);
@@ -94,6 +94,8 @@ public class SQLiteAdapter {
 				null, null, null, null);
 		return cursor;
 	}
+	
+	
 
 	public class SQLiteHelper extends SQLiteOpenHelper {
 

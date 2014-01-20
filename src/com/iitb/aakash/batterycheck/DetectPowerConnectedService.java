@@ -29,6 +29,7 @@ public class DetectPowerConnectedService extends Service {
 	Calendar today;
 	private Timer _timer = null;
 	static int level;
+	static int count = 0;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -172,11 +173,11 @@ public class DetectPowerConnectedService extends Service {
 					mySQLiteAdapter.insert(
 							today.get(Calendar.HOUR) + ":"
 									+ today.get(Calendar.MINUTE) + ":"
-									+ today.get(Calendar.SECOND), "0:0:0", ""
-									+ level, "demo%", today.get(Calendar.DATE)
+									+ today.get(Calendar.SECOND), "-", ""
+									+ level, "-", today.get(Calendar.DATE)
 									+ "-" + today.get(Calendar.MONTH) + "-"
-									+ today.get(Calendar.YEAR),
-							"demo/demo/demo");
+									+ today.get(Calendar.YEAR), "-");
+					count++;
 
 					updateList();
 					// updateList();
