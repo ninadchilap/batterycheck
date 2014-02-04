@@ -32,6 +32,7 @@ public class BatteryCheck extends Activity {
 	Calendar today;
 	ListView listContent;
 	static int level;
+	ImageView imgBatteryState;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class BatteryCheck extends Activity {
 		txtTech = (TextView) findViewById(R.id.txtTechnology);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
 
+		imgBatteryState =(ImageView)findViewById(R.id.imgBattery);
 		listContent = (ListView) findViewById(R.id.listView);
 
 		today = Calendar.getInstance();
@@ -101,7 +103,7 @@ public class BatteryCheck extends Activity {
 
 			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
 			int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
-			
+
 			// boolean present=
 			// intent.getExtras().getBoolean(BatteryManager.EXTRA_PRESENT);
 			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
@@ -122,7 +124,6 @@ public class BatteryCheck extends Activity {
 			 */
 			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
-
 			txtHealth.setText("Health: " + health);
 			txtTemp.setText("Temperature: " + temperature);
 			txtVolt.setText("Voltage: " + voltage + "mAh");
@@ -130,12 +131,56 @@ public class BatteryCheck extends Activity {
 			txtPercentage.setText(level + "%");
 
 			if (plugged == 1 || plugged == 2) {
+				
+				if(level <= 10)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_red_charging);
+				}
+				else if(level > 10 && level <= 20)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_red_charging);
+				}
+				else if(level > 20 && level <= 60)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_orange_charging);
+				}
+				else if(level > 60 && level <= 90)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_yellow_charging);
+				}
+				else if(level > 90 )
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_green_charging);
+				}
+				
+				
 				txtStatus.setText("Status: Charging");
 
 				updateList();
-	
 
 			} else if (plugged == 0) {
+				
+				if(level <= 10)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_empty);
+				}
+				else if(level > 10 && level <= 20)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_red);
+				}
+				else if(level > 20 && level <= 60)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_orange);
+				}
+				else if(level > 60 && level <= 90)
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_yellow);
+				}
+				else if(level > 90 )
+				{
+					imgBatteryState.setImageResource(R.drawable.battery_green);
+				}
+				
 				txtStatus.setText("Status: Not Charging");
 				updateList();
 
