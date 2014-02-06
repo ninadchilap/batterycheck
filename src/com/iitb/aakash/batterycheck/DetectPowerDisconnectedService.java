@@ -60,10 +60,10 @@ public class DetectPowerDisconnectedService extends Service {
 		get_batterpercentage();
 
 		// Show toast notification
-		showToastNotification();
+	//	showToastNotification();
 
 		// Show status bar notification
-		showStatusBarNotification();
+	//	showStatusBarNotification();
 
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -73,7 +73,7 @@ public class DetectPowerDisconnectedService extends Service {
 	}
 
 	// Show status bar notification
-	private void showStatusBarNotification() {
+	/*private void showStatusBarNotification() {
 		_timer = new Timer();
 		_timer.schedule(new TimerTask() {
 			@Override
@@ -83,11 +83,11 @@ public class DetectPowerDisconnectedService extends Service {
 				bundle.putString("message_title", "AC power is disconnected");
 				bundle.putString("message_text", "Click here to fire intent");
 				bundle.putString("ticker_text", "AC power is disconnected");
-				/*
+				
 				 * message.obj = bundle; toastHandler.sendMessage(message);
-				 */
+				 
 
-				/* Handler required only for toast notifications */
+				 Handler required only for toast notifications 
 
 				// Get reference to notification manager
 				NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -123,9 +123,9 @@ public class DetectPowerDisconnectedService extends Service {
 			}
 		}, 500);
 	}
-
+*/
 	// Show toast notification
-	private void showToastNotification() {
+	/*private void showToastNotification() {
 
 		_timer = new Timer();
 		_timer.schedule(new TimerTask() {
@@ -139,7 +139,7 @@ public class DetectPowerDisconnectedService extends Service {
 			}
 		}, 5000);
 
-	}
+	}*/
 
 	private final Handler toastHandler = new Handler() {
 		@Override
@@ -164,17 +164,21 @@ public class DetectPowerDisconnectedService extends Service {
 				String curTime = String.format("%02d:%02d:%02d",
 						today.get(Calendar.HOUR), today.get(Calendar.MINUTE),
 						today.get(Calendar.SECOND));
-				String curDate = String.format("%02d-%02d-%02d",
+				String curDate = String.format("%02d/%02d/%02d",
 						today.get(Calendar.DATE), today.get(Calendar.MONTH)+1,
 						today.get(Calendar.YEAR));
 
 				if (plugged == 0) {
-
-					mySQLiteAdapter.update_byID(countingid.count, curTime, ""
+			
+					int count_id=cursor.getCount();
+					/* Toast.makeText(getApplicationContext(),
+					 "stored count "+count_id, Toast.LENGTH_SHORT).show();
+					*/
+					mySQLiteAdapter.update_byID(count_id, curTime, ""
 							+ level, curDate);
 
 					updateList();
-					// updateList();
+		
 
 				}
 

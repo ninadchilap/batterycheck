@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -33,6 +35,7 @@ public class BatteryCheck extends Activity {
 	ListView listContent;
 	static int level;
 	ImageView imgBatteryState;
+	TextView txt_logs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,21 @@ public class BatteryCheck extends Activity {
 		txtVolt = (TextView) findViewById(R.id.txtVoltage);
 		txtTech = (TextView) findViewById(R.id.txtTechnology);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
+		txt_logs=(TextView)findViewById(R.id.txtLogs_inactive);
+		
+		
+		txt_logs.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent logsactivity= new Intent(BatteryCheck.this,Logs.class);
+				startActivity(logsactivity);
+			}
+		});
 
 		imgBatteryState =(ImageView)findViewById(R.id.imgBattery);
-		listContent = (ListView) findViewById(R.id.listView);
+	//	listContent = (ListView) findViewById(R.id.listView);
 
 		today = Calendar.getInstance();
 		/*

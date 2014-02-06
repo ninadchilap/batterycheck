@@ -19,6 +19,7 @@ public class DetectPowerConnectedStateRecevier extends BroadcastReceiver {
 			
 	    	Intent i = new Intent(context, DetectPowerConnectedService.class);
 			context.startService(i);
+		//	context.stopService(i);
 			
 			
 	    } // if(action.equals(Intent.ACTION_POWER_CONNECTED)) 
@@ -28,6 +29,7 @@ public class DetectPowerConnectedStateRecevier extends BroadcastReceiver {
 			
 	    	Intent i = new Intent(context, DetectPowerDisconnectedService.class);
 			context.startService(i);
+		//	context.stopService(i);
 			
 	    } // if(action.equals(Intent.ACTION_POWER_DISCONNECTED)) 
 
