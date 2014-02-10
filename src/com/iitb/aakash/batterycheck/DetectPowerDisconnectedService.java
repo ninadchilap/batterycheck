@@ -30,6 +30,7 @@ public class DetectPowerDisconnectedService extends Service {
 	Calendar today;
 	static int level;
 	DetectPowerConnectedService countingid;
+	//BroadcastReceiver batteryLevelReceiver;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -37,6 +38,47 @@ public class DetectPowerDisconnectedService extends Service {
 		return null;
 	}
 
+	
+	
+	BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
+		public void onReceive(Context context, Intent intent)
+
+		{
+			context.unregisterReceiver(this);
+
+			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
+					0);
+			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+
+			String curTime = String.format("%02d:%02d:%02d",
+					today.get(Calendar.HOUR), today.get(Calendar.MINUTE),
+					today.get(Calendar.SECOND));
+			String curDate = String.format("%02d/%02d/%02d",
+					today.get(Calendar.DATE), today.get(Calendar.MONTH)+1,
+					today.get(Calendar.YEAR));
+
+			if (plugged == 0) {
+		
+				int count_id=cursor.getCount();
+				/* Toast.makeText(getApplicationContext(),
+				 "stored count "+count_id, Toast.LENGTH_SHORT).show();
+				*/
+				mySQLiteAdapter.update_byID(count_id, curTime, ""
+						+ level, curDate);
+
+				
+				updateList();
+				cursor.close();
+				mySQLiteAdapter.close();
+
+
+			}
+
+		}
+	};
+
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -47,6 +89,7 @@ public class DetectPowerDisconnectedService extends Service {
 
 	@Override
 	public void onDestroy() {
+		this.unregisterReceiver(this.batteryLevelReceiver);
 		super.onDestroy();
 	}
 
@@ -57,14 +100,16 @@ public class DetectPowerDisconnectedService extends Service {
 		mySQLiteAdapter.openToWrite();
 		cursor = mySQLiteAdapter.queueAll();
 
-		get_batterpercentage();
+		//get_batterpercentage();
+		this.registerReceiver(batteryLevelReceiver, new IntentFilter(
+				Intent.ACTION_BATTERY_CHANGED));
 
 		// Show toast notification
 	//	showToastNotification();
 
 		// Show status bar notification
 	//	showStatusBarNotification();
-
+		
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -150,44 +195,5 @@ public class DetectPowerDisconnectedService extends Service {
 		}
 	};
 
-	public void get_batterpercentage() {
-		BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
-			public void onReceive(Context context, Intent intent)
-
-			{
-				context.unregisterReceiver(this);
-
-				int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,
-						0);
-				level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-
-				String curTime = String.format("%02d:%02d:%02d",
-						today.get(Calendar.HOUR), today.get(Calendar.MINUTE),
-						today.get(Calendar.SECOND));
-				String curDate = String.format("%02d/%02d/%02d",
-						today.get(Calendar.DATE), today.get(Calendar.MONTH)+1,
-						today.get(Calendar.YEAR));
-
-				if (plugged == 0) {
-			
-					int count_id=cursor.getCount();
-					/* Toast.makeText(getApplicationContext(),
-					 "stored count "+count_id, Toast.LENGTH_SHORT).show();
-					*/
-					mySQLiteAdapter.update_byID(count_id, curTime, ""
-							+ level, curDate);
-
-					updateList();
-		
-
-				}
-
-			}
-		};
-
-		this.registerReceiver(batteryLevelReceiver, new IntentFilter(
-				Intent.ACTION_BATTERY_CHANGED));
-
-	}
 
 }

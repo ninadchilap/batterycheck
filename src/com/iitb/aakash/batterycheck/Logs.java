@@ -48,19 +48,20 @@ public class Logs extends Activity {
 				  from, to);
 				 listContent.setAdapter(cursorAdapter);
 				 
-				 this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(
-							Intent.ACTION_BATTERY_CHANGED)); 
+				/* this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(
+							Intent.ACTION_BATTERY_CHANGED)); */
 				 
 				
 
 		
 		txt_info.setOnClickListener(new OnClickListener() {
 
-			@Override
+		
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent infoactivity = new Intent(Logs.this, BatteryCheck.class);
 				startActivity(infoactivity);
+				finish();
 			}
 		});
 		
@@ -72,13 +73,13 @@ public class Logs extends Activity {
 		cursor.requery();
 	}
 	
-	 BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
+/*	 BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
 			public void onReceive(Context context, Intent intent) {
 				
 				updateList();
 
 			}
-		};
+		};*/
 	  
 
 }
