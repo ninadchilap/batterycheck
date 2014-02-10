@@ -28,9 +28,9 @@ public class BatteryCheck extends Activity {
 
 	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,
 			txtPercentage;
-	private SQLiteAdapter mySQLiteAdapter;
-	SimpleCursorAdapter cursorAdapter;
-	Cursor cursor;
+	//private SQLiteAdapter mySQLiteAdapter;
+//	SimpleCursorAdapter cursorAdapter;
+//	Cursor cursor;
 	Calendar today;
 	ListView listContent;
 	static int level;
@@ -42,6 +42,9 @@ public class BatteryCheck extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.info);
 
+		
+		
+		
 		/* Initialization of all the objects of widgets */
 
 		// batteryInfo = ((TextView) findViewById(R.id.textViewBatteryInfo));
@@ -64,11 +67,11 @@ public class BatteryCheck extends Activity {
 		
 		txt_logs.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent logsactivity= new Intent(BatteryCheck.this,Logs.class);
 				startActivity(logsactivity);
+				finish();
 			}
 		});
 
@@ -82,12 +85,12 @@ public class BatteryCheck extends Activity {
 		 */
 
 		/* initialization of SQLite adapter */
-		mySQLiteAdapter = new SQLiteAdapter(this);
+	/*	mySQLiteAdapter = new SQLiteAdapter(this);
 		mySQLiteAdapter.openToWrite();
 
 		// updateList();
 
-		cursor = mySQLiteAdapter.queueAll();
+		cursor = mySQLiteAdapter.queueAll();*/
 		/*
 		 * String[] from = new String[] { SQLiteAdapter.TIME_IN,
 		 * SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
@@ -107,12 +110,14 @@ public class BatteryCheck extends Activity {
 		this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(
 				Intent.ACTION_BATTERY_CHANGED));
 
+		
+		
 	}
-
+/*
 	public void updateList() {
 		cursor.requery();
 	}
-
+*/
 	BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 
@@ -171,7 +176,7 @@ public class BatteryCheck extends Activity {
 				
 				txtStatus.setText("Status: Charging");
 
-				updateList();
+			//	updateList();
 
 			} else if (plugged == 0) {
 				
@@ -197,7 +202,7 @@ public class BatteryCheck extends Activity {
 				}
 				
 				txtStatus.setText("Status: Not Charging");
-				updateList();
+			//	updateList();
 
 			}
 
@@ -209,6 +214,13 @@ public class BatteryCheck extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.battery_check, menu);
 		return true;
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		this.unregisterReceiver(this.batteryLevelReceiver);
+		super.onStop();
 	}
 
 }
