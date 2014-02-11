@@ -68,13 +68,13 @@ public class DetectPowerConnectedService extends Service {
 
 				{
 					cursor.moveToPosition(cursor.getCount() - 1);
-					Toast.makeText(getApplicationContext(), "Cursore string"+cursor.getString(5), Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), "Cursore string"+cursor.getString(5), Toast.LENGTH_SHORT).show();
 					
-					if (cursor.getString(5) != "--/--/--") {
+					if (!(cursor.getString(6)).equals("--/--/----")) {
 						
 						mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
 						"--", curDate, "--/--/----");
-						Toast.makeText(getApplicationContext(), "Cursore count "+(cursor.getCount() + 1), Toast.LENGTH_SHORT).show();
+						//Toast.makeText(getApplicationContext(), "Cursore count "+(cursor.getCount() + 1), Toast.LENGTH_SHORT).show();
 
 					} 
 				}

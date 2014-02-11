@@ -220,7 +220,16 @@ public class BatteryCheck extends Activity {
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		this.unregisterReceiver(this.batteryLevelReceiver);
+		finish();
 		super.onStop();
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		//this.unregisterReceiver(this.batteryLevelReceiver);
+		finish();
+		super.onPause();
 	}
 
 }
