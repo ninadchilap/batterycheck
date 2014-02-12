@@ -18,7 +18,7 @@
         <activity
             android:name="com.iitb.aakash.batterycheck.BatteryCheck" 
             android:screenOrientation="landscape"
-            
+            android:theme="@android:style/Theme.Light.NoTitleBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,8 @@
         
              <activity
             android:name="com.iitb.aakash.batterycheck.Logs" 
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Light.NoTitleBar"  >
             
         </activity>
         <receiver android:name="DetectPowerConnectedStateRecevier">

@@ -123,7 +123,38 @@ public class BatteryCheck extends Activity {
 
 			int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
 			int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
-
+			String strHealth = null;
+			// Displaying the health constants
+			switch(health){
+			case 7:
+				strHealth = "Battery Cold";
+				break;
+				
+			case 4:
+				strHealth = "Battery Dead";
+				break;
+				
+			case 2:
+				strHealth = "Battery Good";
+				break;
+				
+			case 3:
+				strHealth = "Battery Overheat";
+				break;
+				
+			case 5:
+				strHealth = "Battery Over Voltage";
+				break;
+				
+			case 1:
+				strHealth = "Unknown";
+				break;
+				
+			case 6:
+				strHealth = "Battery Failure";
+				break;
+			}
+			
 			// boolean present=
 			// intent.getExtras().getBoolean(BatteryManager.EXTRA_PRESENT);
 			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
@@ -144,8 +175,8 @@ public class BatteryCheck extends Activity {
 			 */
 			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
-			txtHealth.setText("Health: " + health);
-			txtTemp.setText("Temperature: " + temperature);
+			txtHealth.setText("Health: " + strHealth);
+			txtTemp.setText("Temperature: " + temperature/10 +"C");
 			txtVolt.setText("Voltage: " + voltage + "mAh");
 			txtTech.setText("Technology: " + technology);
 			txtPercentage.setText(level + "%");
