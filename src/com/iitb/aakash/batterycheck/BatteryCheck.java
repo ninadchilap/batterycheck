@@ -1,5 +1,9 @@
 package com.iitb.aakash.batterycheck;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -10,13 +14,15 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BatteryCheck extends Activity {
 
@@ -28,23 +34,25 @@ public class BatteryCheck extends Activity {
 
 	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,
 			txtPercentage;
-	//private SQLiteAdapter mySQLiteAdapter;
-//	SimpleCursorAdapter cursorAdapter;
-//	Cursor cursor;
+	// private SQLiteAdapter mySQLiteAdapter;
+	// SimpleCursorAdapter cursorAdapter;
+	// Cursor cursor;
 	Calendar today;
 	ListView listContent;
 	static int level;
 	ImageView imgBatteryState;
 	TextView txt_logs;
+	SQLiteAdapter dbAdapter;
+	Cursor cursor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.info);
+		dbAdapter = new SQLiteAdapter(this);
+		dbAdapter.openToWrite();
+		cursor = dbAdapter.queueAll();
 
-		
-		
-		
 		/* Initialization of all the objects of widgets */
 
 		// batteryInfo = ((TextView) findViewById(R.id.textViewBatteryInfo));
@@ -62,21 +70,20 @@ public class BatteryCheck extends Activity {
 		txtVolt = (TextView) findViewById(R.id.txtVoltage);
 		txtTech = (TextView) findViewById(R.id.txtTechnology);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
-		txt_logs=(TextView)findViewById(R.id.txtLogs_inactive);
-		
-		
+		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
+
 		txt_logs.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent logsactivity= new Intent(BatteryCheck.this,Logs.class);
+				Intent logsactivity = new Intent(BatteryCheck.this, Logs.class);
 				startActivity(logsactivity);
 				finish();
 			}
 		});
 
-		imgBatteryState =(ImageView)findViewById(R.id.imgBattery);
-	//	listContent = (ListView) findViewById(R.id.listView);
+		imgBatteryState = (ImageView) findViewById(R.id.imgBattery);
+		// listContent = (ListView) findViewById(R.id.listView);
 
 		today = Calendar.getInstance();
 		/*
@@ -85,12 +92,14 @@ public class BatteryCheck extends Activity {
 		 */
 
 		/* initialization of SQLite adapter */
-	/*	mySQLiteAdapter = new SQLiteAdapter(this);
-		mySQLiteAdapter.openToWrite();
-
-		// updateList();
-
-		cursor = mySQLiteAdapter.queueAll();*/
+		/*
+		 * mySQLiteAdapter = new SQLiteAdapter(this);
+		 * mySQLiteAdapter.openToWrite();
+		 * 
+		 * // updateList();
+		 * 
+		 * cursor = mySQLiteAdapter.queueAll();
+		 */
 		/*
 		 * String[] from = new String[] { SQLiteAdapter.TIME_IN,
 		 * SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
@@ -110,14 +119,11 @@ public class BatteryCheck extends Activity {
 		this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(
 				Intent.ACTION_BATTERY_CHANGED));
 
-		
-		
 	}
-/*
-	public void updateList() {
-		cursor.requery();
-	}
-*/
+
+	/*
+	 * public void updateList() { cursor.requery(); }
+	 */
 	BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 
@@ -151,58 +157,44 @@ public class BatteryCheck extends Activity {
 			txtPercentage.setText(level + "%");
 
 			if (plugged == 1 || plugged == 2) {
-				
-				if(level <= 10)
-				{
-					imgBatteryState.setImageResource(R.drawable.battery_red_charging);
+
+				if (level <= 10) {
+					imgBatteryState
+							.setImageResource(R.drawable.battery_red_charging);
+				} else if (level > 10 && level <= 20) {
+					imgBatteryState
+							.setImageResource(R.drawable.battery_red_charging);
+				} else if (level > 20 && level <= 60) {
+					imgBatteryState
+							.setImageResource(R.drawable.battery_orange_charging);
+				} else if (level > 60 && level <= 90) {
+					imgBatteryState
+							.setImageResource(R.drawable.battery_yellow_charging);
+				} else if (level > 90) {
+					imgBatteryState
+							.setImageResource(R.drawable.battery_green_charging);
 				}
-				else if(level > 10 && level <= 20)
-				{
-					imgBatteryState.setImageResource(R.drawable.battery_red_charging);
-				}
-				else if(level > 20 && level <= 60)
-				{
-					imgBatteryState.setImageResource(R.drawable.battery_orange_charging);
-				}
-				else if(level > 60 && level <= 90)
-				{
-					imgBatteryState.setImageResource(R.drawable.battery_yellow_charging);
-				}
-				else if(level > 90 )
-				{
-					imgBatteryState.setImageResource(R.drawable.battery_green_charging);
-				}
-				
-				
+
 				txtStatus.setText("Status: Charging");
 
-			//	updateList();
+				// updateList();
 
 			} else if (plugged == 0) {
-				
-				if(level <= 10)
-				{
+
+				if (level <= 10) {
 					imgBatteryState.setImageResource(R.drawable.battery_empty);
-				}
-				else if(level > 10 && level <= 20)
-				{
+				} else if (level > 10 && level <= 20) {
 					imgBatteryState.setImageResource(R.drawable.battery_red);
-				}
-				else if(level > 20 && level <= 60)
-				{
+				} else if (level > 20 && level <= 60) {
 					imgBatteryState.setImageResource(R.drawable.battery_orange);
-				}
-				else if(level > 60 && level <= 90)
-				{
+				} else if (level > 60 && level <= 90) {
 					imgBatteryState.setImageResource(R.drawable.battery_yellow);
-				}
-				else if(level > 90 )
-				{
+				} else if (level > 90) {
 					imgBatteryState.setImageResource(R.drawable.battery_green);
 				}
-				
+
 				txtStatus.setText("Status: Not Charging");
-			//	updateList();
+				// updateList();
 
 			}
 
@@ -217,17 +209,75 @@ public class BatteryCheck extends Activity {
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.export:
+
+			backupDatabaseCSV("/mnt/sdcard/"); // call to export function
+
+			return true;
+		case R.id.about:
+			// startActivity(new Intent(this, About.class));
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+		// respond to menu item selection
+
+	}
+
+	// ------------- Export table data to CSV file--------------------//
+	private void backupDatabaseCSV(String outFileName) {
+
+		String csvValues = "";
+
+		try {
+
+			File outFile = new File(outFileName, "batterycheck.csv");
+			FileWriter fileWriter = new FileWriter(outFile);
+			BufferedWriter out = new BufferedWriter(fileWriter);
+
+			if (cursor != null) {
+				// out.write(csvHeader);
+				while (cursor.moveToNext()) {
+					csvValues = cursor.getInt(0) + ",";
+					csvValues += cursor.getString(1) + ",";
+					csvValues += cursor.getString(2) + ",";
+					csvValues += cursor.getString(3) + ",";
+					csvValues += cursor.getString(4) + ",";
+					csvValues += cursor.getString(5) + ",";
+					csvValues += cursor.getString(6);
+
+					csvValues += "\n";
+
+					out.write(csvValues);
+
+				}
+				cursor.close();
+			}
+			out.close();
+			Toast.makeText(getApplicationContext(), "Exported to /mnt/sdcard/ ", Toast.LENGTH_SHORT).show();
+
+		} catch (IOException e) {
+
+		}
+		dbAdapter.close();
+
+	}
+
+	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		this.unregisterReceiver(this.batteryLevelReceiver);
 		finish();
 		super.onStop();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
-		//this.unregisterReceiver(this.batteryLevelReceiver);
+		// this.unregisterReceiver(this.batteryLevelReceiver);
 		finish();
 		super.onPause();
 	}
