@@ -35,13 +35,14 @@ public final class R {
         public static final int reflect=0x7f02000b;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001b;
+        public static final int about=0x7f08001c;
         public static final int colEndDate=0x7f080015;
         public static final int colEndPercentage=0x7f080019;
         public static final int colEndTime=0x7f080017;
         public static final int colStartDate=0x7f080014;
         public static final int colStartPercentage=0x7f080018;
         public static final int colStartTime=0x7f080016;
+        public static final int export=0x7f08001b;
         public static final int imageView1=0x7f080000;
         public static final int imgBattery=0x7f08000b;
         public static final int listView=0x7f08001a;
