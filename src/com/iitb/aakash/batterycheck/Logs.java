@@ -1,5 +1,6 @@
 package com.iitb.aakash.batterycheck;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,9 +16,10 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 public class Logs extends Activity {
 
-	TextView txt_info;
+	TextView txt_info,txt_graph;
 	private SQLiteAdapter mySQLiteAdapter;
 	SimpleCursorAdapter cursorAdapter;
 	Cursor cursor;
@@ -34,6 +36,7 @@ public class Logs extends Activity {
 		mySQLiteAdapter.openToWrite();
 		cursor = mySQLiteAdapter.queueAll();
 		listContent = (ListView) findViewById(R.id.listView);
+		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
 
 
 		String[] from = new String[] { SQLiteAdapter.START_DATE,
@@ -59,8 +62,25 @@ public class Logs extends Activity {
 		
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				v.setAlpha((float) 0.2);
 				Intent infoactivity = new Intent(Logs.this, BatteryCheck.class);
 				startActivity(infoactivity);
+				overridePendingTransition(R.anim.anim_left_to_right,
+						R.anim.anim_right_to_left);
+				finish();
+			}
+		});
+		
+		txt_graph.setOnClickListener(new OnClickListener() {
+
+			@SuppressLint("NewApi")
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				v.setAlpha((float) 0.2);
+				Intent infoactivity = new Intent(Logs.this, Graph.class);
+				startActivity(infoactivity);
+				overridePendingTransition(R.anim.anim_left_to_right1,
+						R.anim.anim_right_to_left1);
 				finish();
 			}
 		});
