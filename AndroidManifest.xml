@@ -31,6 +31,12 @@
             android:name="com.iitb.aakash.batterycheck.Logs" 
             android:screenOrientation="landscape"
             >
+             </activity>
+                 
+               <activity
+            android:name="com.iitb.aakash.batterycheck.Graph" 
+            android:screenOrientation="landscape"
+            >
             
         </activity>
         <receiver android:name="DetectPowerConnectedStateRecevier">

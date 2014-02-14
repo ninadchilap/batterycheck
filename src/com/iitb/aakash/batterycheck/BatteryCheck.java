@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,7 +42,7 @@ public class BatteryCheck extends Activity {
 	ListView listContent;
 	static int level;
 	ImageView imgBatteryState;
-	TextView txt_logs;
+	TextView txt_logs,txt_graph;
 	SQLiteAdapter dbAdapter;
 	Cursor cursor;
 
@@ -71,13 +72,35 @@ public class BatteryCheck extends Activity {
 		txtTech = (TextView) findViewById(R.id.txtTechnology);
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
 		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
+		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
+
+		
+		
+		
+		txt_graph.setOnClickListener(new OnClickListener() {
+
+			@SuppressLint("NewApi")
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				v.setAlpha((float) 0.2);
+				Intent infoactivity = new Intent(BatteryCheck.this, Graph.class);
+				startActivity(infoactivity);
+				overridePendingTransition(R.anim.anim_left_to_right1,
+						R.anim.anim_right_to_left1);
+				finish();
+			}
+		});
 
 		txt_logs.setOnClickListener(new OnClickListener() {
 
+			@SuppressLint("NewApi")
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent logsactivity = new Intent(BatteryCheck.this, Logs.class);
-				startActivity(logsactivity);
+				v.setAlpha((float) 0.2);
+				Intent infoactivity = new Intent(BatteryCheck.this, Logs.class);
+				startActivity(infoactivity);
+				overridePendingTransition(R.anim.anim_left_to_right1,
+						R.anim.anim_right_to_left1);
 				finish();
 			}
 		});
