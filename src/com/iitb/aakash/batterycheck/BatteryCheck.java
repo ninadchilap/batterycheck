@@ -15,9 +15,9 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.BatteryManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -25,14 +25,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BatteryCheck extends Activity {
+import com.iitb.aakash.batterycheck.SimpleGestureFilter.SimpleGestureListener;
+
+public class BatteryCheck extends Activity implements SimpleGestureListener {
 
 	// static TextView batteryInfo;
 	/*
 	 * private ImageView imageBatteryState; private TextView batterypercent;
 	 * private TextView charging;
 	 */
-
+	private SimpleGestureFilter detector;
 	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,
 			txtPercentage;
 	// private SQLiteAdapter mySQLiteAdapter;
@@ -42,7 +44,7 @@ public class BatteryCheck extends Activity {
 	ListView listContent;
 	static int level;
 	ImageView imgBatteryState;
-	TextView txt_logs,txt_graph;
+	TextView txt_logs, txt_graph;
 	SQLiteAdapter dbAdapter;
 	Cursor cursor;
 
@@ -54,6 +56,7 @@ public class BatteryCheck extends Activity {
 		dbAdapter.openToWrite();
 		cursor = dbAdapter.queueAll();
 
+		detector = new SimpleGestureFilter(this, this);
 		/* Initialization of all the objects of widgets */
 
 		// batteryInfo = ((TextView) findViewById(R.id.textViewBatteryInfo));
@@ -74,9 +77,6 @@ public class BatteryCheck extends Activity {
 		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
 
-		
-		
-		
 		txt_graph.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
@@ -154,36 +154,36 @@ public class BatteryCheck extends Activity {
 			int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
 			String strHealth = null;
 			// Displaying the health constants
-			switch(health){
+			switch (health) {
 			case 7:
 				strHealth = "Battery Cold";
 				break;
-				
+
 			case 4:
 				strHealth = "Battery Dead";
 				break;
-				
+
 			case 2:
 				strHealth = "Battery Good";
 				break;
-				
+
 			case 3:
 				strHealth = "Battery Overheat";
 				break;
-				
+
 			case 5:
 				strHealth = "Battery Over Voltage";
 				break;
-				
+
 			case 1:
 				strHealth = "Unknown";
 				break;
-				
+
 			case 6:
 				strHealth = "Battery Failure";
 				break;
 			}
-			
+
 			// boolean present=
 			// intent.getExtras().getBoolean(BatteryManager.EXTRA_PRESENT);
 			int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
@@ -205,7 +205,7 @@ public class BatteryCheck extends Activity {
 			level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
 			txtHealth.setText("Health: " + strHealth);
-			txtTemp.setText("Temperature: " + temperature/10 +"C");
+			txtTemp.setText("Temperature: " + temperature / 10 + "C");
 			txtVolt.setText("Voltage: " + voltage + "mAh");
 			txtTech.setText("Technology: " + technology);
 			txtPercentage.setText(level + "%");
@@ -311,7 +311,8 @@ public class BatteryCheck extends Activity {
 				cursor.close();
 			}
 			out.close();
-			Toast.makeText(getApplicationContext(), "Exported to /mnt/sdcard/ ", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"Exported to /mnt/sdcard/ ", Toast.LENGTH_SHORT).show();
 
 		} catch (IOException e) {
 
@@ -336,4 +337,36 @@ public class BatteryCheck extends Activity {
 		super.onPause();
 	}
 
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent me) {
+		// Call onTouchEvent of SimpleGestureFilter class
+		this.detector.onTouchEvent(me);
+		return super.dispatchTouchEvent(me);
+	}
+
+	@Override
+	public void onSwipe(int direction) {
+		
+		switch (direction) {
+
+		case SimpleGestureFilter.SWIPE_RIGHT:
+			System.out.println("RIGHT");
+			
+			break;
+		case SimpleGestureFilter.SWIPE_LEFT:
+			System.out.println("LEFT");
+			Intent logsactivity = new Intent(BatteryCheck.this, Logs.class);
+			startActivity(logsactivity);
+			overridePendingTransition(R.anim.anim_left_to_right1,
+					R.anim.anim_right_to_left1);
+			finish();
+			break;
+		
+		}
+	}
+
+	@Override
+	public void onDoubleTap() {
+		//Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
+	}
 }
