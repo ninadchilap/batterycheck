@@ -63,10 +63,15 @@ public class DetectPowerDisconnectedService extends Service {
 				/* Toast.makeText(getApplicationContext(),
 				 "stored count "+count_id, Toast.LENGTH_SHORT).show();
 				*/
+				cursor.moveToLast();
+				Toast.makeText(context, "count id: "+count_id+" getstring: "+cursor.getString(6), Toast.LENGTH_SHORT).show();
+				if ((cursor.getString(6)).equals("--/--/----")) {
+				
+				
 				mySQLiteAdapter.update_byID(count_id, curTime, ""
 						+ level, curDate);
 
-				
+				}
 				updateList();
 				cursor.close();
 				mySQLiteAdapter.close();
