@@ -61,7 +61,7 @@ public class DetectPowerConnectedService extends Service {
 				{
 					
 					mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
-							"--", curDate, "--/--/----");
+							"--", curDate, "--/--/----","","");
 						
 				}
 				else
@@ -73,7 +73,7 @@ public class DetectPowerConnectedService extends Service {
 					if (!(cursor.getString(6)).equals("--/--/----")) {
 						
 						mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
-						"--", curDate, "--/--/----");
+								"--", curDate, "--/--/----","","");
 						//Toast.makeText(getApplicationContext(), "Cursore count "+(cursor.getCount() + 1), Toast.LENGTH_SHORT).show();
 
 					} 

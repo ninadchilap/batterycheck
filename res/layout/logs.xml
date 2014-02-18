@@ -148,30 +148,10 @@
         
 
                 <TextView
-                    android:id="@+id/colStartDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.1"
-                   
-                    android:text="Start Date"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/colEndDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-    
-                    android:text="End Date"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-                
-                <TextView
                     android:id="@+id/colStartTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
                    
                     android:text="Start Time"
                     android:textSize="20dp"
@@ -182,7 +162,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                
+    
                     android:text="End Time"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -192,20 +172,40 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                  
+                   
                     android:text="Start %"
                     android:textSize="20dp"
                     android:textStyle="bold" />
-
-                
 
                 <TextView
                     android:id="@+id/colEndPercentage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                  
+                
                     android:text="End %"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                
+                <TextView
+                    android:id="@+id/colTimeDiff"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                  
+                    android:text="Time Diff"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                
+
+                <TextView
+                    android:id="@+id/colPerCharged"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                  
+                    android:text="% Charged"
                     android:textSize="20dp"
                     android:textStyle="bold" />
        
