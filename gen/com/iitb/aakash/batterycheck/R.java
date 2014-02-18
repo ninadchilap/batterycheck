@@ -42,12 +42,12 @@ public final class R {
     }
     public static final class id {
         public static final int about=0x7f09001f;
-        public static final int colEndDate=0x7f090018;
-        public static final int colEndPercentage=0x7f09001c;
-        public static final int colEndTime=0x7f09001a;
-        public static final int colStartDate=0x7f090017;
-        public static final int colStartPercentage=0x7f09001b;
-        public static final int colStartTime=0x7f090019;
+        public static final int colEndPercentage=0x7f09001a;
+        public static final int colEndTime=0x7f090018;
+        public static final int colPerCharged=0x7f09001c;
+        public static final int colStartPercentage=0x7f090019;
+        public static final int colStartTime=0x7f090017;
+        public static final int colTimeDiff=0x7f09001b;
         public static final int divider=0x7f090003;
         public static final int export=0x7f09001e;
         public static final int graph1=0x7f090006;

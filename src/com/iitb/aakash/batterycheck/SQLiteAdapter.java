@@ -19,6 +19,9 @@ public class SQLiteAdapter {
 	public static final String END_PER = "End_Per";
 	public static final String START_DATE = "Start_Date";
 	public static final String END_DATE = "End_Date";
+	public static final String TIME_TAKEN = "Time_Taken";
+	public static final String PERCENTAGE = "Percentage";
+	
 	// create table MY_DATABASE (ID integer primary key, Content text not null);
 	private static final String SCRIPT_CREATE_DATABASE = "create table "
 			+ MYDATABASE_TABLE + " (" + KEY_ID
@@ -26,7 +29,9 @@ public class SQLiteAdapter {
 			+ " text not null," + TIME_OUT + " text not null,"
 			+ START_PER + " text not null,"+ END_PER
 			+ " text not null," + START_DATE + " text not null,"
-			+ END_DATE + " text not null);";
+			+ END_DATE + " text not null,"
+			+ TIME_TAKEN +" text not null,"
+			+ PERCENTAGE +" text not null);";
 
 	private SQLiteHelper sqLiteHelper;
 	private SQLiteDatabase sqLiteDatabase;
@@ -55,7 +60,7 @@ public class SQLiteAdapter {
 		sqLiteHelper.close();
 	}
 
-	public long insert(String content1, String content2, String content3,String content4, String content5, String content6) {
+	public long insert(String content1, String content2, String content3,String content4, String content5, String content6,String content7, String content8) {
 
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(TIME_IN, content1);
@@ -64,6 +69,10 @@ public class SQLiteAdapter {
 		contentValues.put(END_PER, content4);
 		contentValues.put(START_DATE, content5);
 		contentValues.put(END_DATE, content6);
+		contentValues.put(TIME_TAKEN, content7);
+		contentValues.put(PERCENTAGE, content8);
+		
+		
 		return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
 	}
 
@@ -75,7 +84,7 @@ public class SQLiteAdapter {
 		sqLiteDatabase.delete(MYDATABASE_TABLE, KEY_ID + "=" + id, null);
 	}
 
-	public void update_byID(int id, String v2, String v4 , String v6) {
+	public void update_byID(int id, String v2, String v4 , String v6, String v7 , String v8) {
 		ContentValues values = new ContentValues();
 		//values.put(TIME_IN, v1);
 		values.put(TIME_OUT, v2);
@@ -83,13 +92,15 @@ public class SQLiteAdapter {
 		values.put(END_PER, v4);
 		//values.put(START_DATE, v5);
 		values.put(END_DATE, v6);
+		values.put(TIME_TAKEN, v7);
+		values.put(PERCENTAGE, v8);
 		sqLiteDatabase
 				.update(MYDATABASE_TABLE, values, KEY_ID + "=" + id, null);
 	}
 
 	public Cursor queueAll() {
 		String[] columns = new String[] { KEY_ID, TIME_IN, TIME_OUT,
-				START_PER,END_PER,START_DATE,END_DATE };
+				START_PER,END_PER,START_DATE,END_DATE,TIME_TAKEN,PERCENTAGE };
 		Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns, null,
 				null, null, null, null);
 		return cursor;

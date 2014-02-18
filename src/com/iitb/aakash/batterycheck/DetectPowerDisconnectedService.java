@@ -67,12 +67,21 @@ public class DetectPowerDisconnectedService extends Service {
 				if(count_id != 0) {
 				
 				cursor.moveToLast();
+				
+				String prevTime = cursor.getString(1);
+				String prevPer = cursor.getString(3);
+				int tempPer = Integer.parseInt(prevPer);
+				
+				String timeTaken = getTimeDiff(prevTime,curTime); // get time diff of start time and end time.
+				
+				Toast.makeText(context, "count id: "+count_id+" prevT "+prevTime+" PrevP: "+tempPer+" DiffT:"+timeTaken, Toast.LENGTH_SHORT).show();
+				
+				int Per = level - tempPer;
+				
 				Toast.makeText(context, "count id: "+count_id+" getstring: "+cursor.getString(6), Toast.LENGTH_SHORT).show();
 				if ((cursor.getString(6)).equals("--/--/----")) {
-				
-				
-				mySQLiteAdapter.update_byID(count_id, curTime, ""
-						+ level, curDate);
+					mySQLiteAdapter.update_byID(count_id, curTime, ""
+							+ level, curDate, timeTaken, ""+Per);
 
 					}
 				}
@@ -86,7 +95,32 @@ public class DetectPowerDisconnectedService extends Service {
 		}
 	};
 
-	
+	// function for getting time difference.
+			public String getTimeDiff(String sTime,String eTime){
+				String[] sTimeArray = sTime.split(":");
+				String[] eTimeArray = eTime.split(":");
+				
+				int shour = Integer.parseInt(sTimeArray[0]);
+				int smins = Integer.parseInt(sTimeArray[1]);
+				int sseconds = Integer.parseInt(sTimeArray[2]);
+				
+				int ehour = Integer.parseInt(eTimeArray[0]);
+				int emins = Integer.parseInt(eTimeArray[1]);
+				int eseconds = Integer.parseInt(eTimeArray[2]);
+
+				int pSec = (shour * 3600) + (smins * 60) + sseconds;
+				int eSec = (ehour * 3600) + (emins * 60) + eseconds;
+				
+				int dSec = eSec - pSec;
+				
+				int hours = dSec / 3600,remainder = dSec % 3600,minutes = remainder / 60,seconds = remainder % 60;
+
+				String disHour = (hours < 10 ? "0" : "") + hours, disMinu = (minutes < 10 ? "0" : "") + minutes, disSec = (seconds < 10 ? "0" : "") + seconds ;
+
+				String time = disHour+":"+disMinu+":"+disSec;
+				
+				return time.toString();
+			}
 	
 	@Override
 	public void onCreate() {

@@ -42,10 +42,9 @@ public class Logs extends Activity implements SimpleGestureListener {
 		listContent = (ListView) findViewById(R.id.listView);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
 
-		String[] from = new String[] { SQLiteAdapter.START_DATE,
-				SQLiteAdapter.END_DATE, SQLiteAdapter.TIME_IN,
+		String[] from = new String[] {SQLiteAdapter.TIME_IN,
 				SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
-				SQLiteAdapter.END_PER, };
+				SQLiteAdapter.END_PER,SQLiteAdapter.TIME_TAKEN,SQLiteAdapter.PERCENTAGE };
 
 		int[] to = new int[] { R.id.txt1, R.id.txt2, R.id.txt3, R.id.txt4,
 				R.id.txt5, R.id.txt6 };
