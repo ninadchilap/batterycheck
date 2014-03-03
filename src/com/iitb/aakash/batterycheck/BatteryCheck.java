@@ -279,6 +279,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		return true;
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -318,7 +319,9 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 					csvValues += cursor.getString(3) + ",";
 					csvValues += cursor.getString(4) + ",";
 					csvValues += cursor.getString(5) + ",";
-					csvValues += cursor.getString(6);
+					csvValues += cursor.getString(6) + ",";
+					csvValues += cursor.getString(7) + ",";
+					csvValues += cursor.getString(8);
 
 					csvValues += "\n";
 
