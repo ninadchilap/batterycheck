@@ -3,6 +3,7 @@ package com.iitb.aakash.batterycheck;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,17 +19,26 @@ import com.jjoe64.graphview.LineGraphView;
 
 public class Graph extends Activity implements SimpleGestureListener {
 
-	TextView txt_info, txt_logs;
+	TextView txt_info, txt_logs, txt_graph, txtTitle;
 	private SimpleGestureFilter detector;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph); 
 		detector = new SimpleGestureFilter(this, this);
 		txt_info = (TextView) findViewById(R.id.txtInfo_inactive);
 		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
-
+		txt_graph = (TextView) findViewById(R.id.txtGraph_active);
+		txtTitle = (TextView) findViewById(R.id.txtTitle);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
+		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
+		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
+		txt_info.setTypeface(font);
+		txt_graph.setTypeface(font_normal);
+		txt_logs.setTypeface(font);
+		txtTitle.setTypeface(font_bold);
+		
 		txt_info.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,8 @@ import com.iitb.aakash.batterycheck.SimpleGestureFilter.SimpleGestureListener;
 @SuppressLint("NewApi")
 public class Logs extends Activity implements SimpleGestureListener {
 
-	TextView txt_info, txt_graph;
+	TextView txt_info, txt_graph, txtTitle, txt_logs;
+	TextView txtSrNo, txtStartTime, txtEndTime, txtStartPercentage , txtEndPercentage, txtTimeDiff, txtPercentageCharged;
 	private SQLiteAdapter mySQLiteAdapter;
 	SimpleCursorAdapter cursorAdapter;
 	Cursor cursor,cursor1;
@@ -51,7 +53,35 @@ public class Logs extends Activity implements SimpleGestureListener {
 		listContent = (ListView) findViewById(R.id.listView);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
 
+		txt_logs = (TextView) findViewById(R.id.txtLogs_active);
+		txtTitle = (TextView) findViewById(R.id.txtTitle);
+
+		txtSrNo = (TextView) findViewById(R.id.colSerialnumber);
+		txtStartTime = (TextView) findViewById(R.id.colStartTime);
+		txtEndTime = (TextView) findViewById(R.id.colEndTime);
+		txtStartPercentage = (TextView) findViewById(R.id.colStartPercentage);
+		txtEndPercentage = (TextView) findViewById(R.id.colEndPercentage);
+		txtTimeDiff = (TextView) findViewById(R.id.colTimeDiff);
+		txtPercentageCharged = (TextView) findViewById(R.id.colPerCharged);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
+		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
+		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
+		txt_info.setTypeface(font);
+		txt_graph.setTypeface(font);
+		txt_logs.setTypeface(font_normal);
+		txtSrNo.setTypeface(font_normal);
+		txtStartTime.setTypeface(font_normal);
+		txtEndTime.setTypeface(font_normal);
+		txtStartPercentage.setTypeface(font_normal);
+		txtEndPercentage.setTypeface(font_normal);
+		txtTimeDiff.setTypeface(font_normal);
+		txtPercentageCharged.setTypeface(font_normal);
+		txtTitle.setTypeface(font_bold);
+		
+	
 		String[] from = new String[] {SQLiteAdapter.KEY_ID, SQLiteAdapter.TIME_IN,
+
 				SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
 				SQLiteAdapter.END_PER,SQLiteAdapter.TIME_TAKEN,SQLiteAdapter.PERCENTAGE };
 
