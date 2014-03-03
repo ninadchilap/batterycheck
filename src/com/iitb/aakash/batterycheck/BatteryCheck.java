@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,7 +37,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 	 */
 	private SimpleGestureFilter detector;
 	private TextView txtStatus, txtHealth, txtTemp, txtVolt, txtTech,
-			txtPercentage;
+			txtPercentage, txt_info, txtTitle;
 	// private SQLiteAdapter mySQLiteAdapter;
 	// SimpleCursorAdapter cursorAdapter;
 	// Cursor cursor;
@@ -76,7 +77,23 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		txtPercentage = (TextView) findViewById(R.id.txtPercentage);
 		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
+		txtTitle = (TextView) findViewById(R.id.txtTitle);
+		txt_info = (TextView) findViewById(R.id.txtInfo_active);
 
+		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
+		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
+		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
+		txtStatus.setTypeface(font);
+		txtHealth.setTypeface(font);
+		txtVolt.setTypeface(font);
+		txtTemp.setTypeface(font);
+		txtPercentage.setTypeface(font);
+		txt_logs.setTypeface(font);
+		txt_graph.setTypeface(font);
+		txtTech.setTypeface(font);
+		txtTitle.setTypeface(font_bold);
+		txt_info.setTypeface(font_normal);
+		
 		txt_graph.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")

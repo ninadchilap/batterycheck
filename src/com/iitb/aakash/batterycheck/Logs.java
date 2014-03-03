@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.iitb.aakash.batterycheck.SimpleGestureFilter.SimpleGestureListener;
 @SuppressLint("NewApi")
 public class Logs extends Activity implements SimpleGestureListener {
 
-	TextView txt_info, txt_graph;
+	TextView txt_info, txt_graph, txtTitle, txt_logs;
 	private SQLiteAdapter mySQLiteAdapter;
 	SimpleCursorAdapter cursorAdapter;
 	Cursor cursor;
@@ -41,7 +42,18 @@ public class Logs extends Activity implements SimpleGestureListener {
 		cursor = mySQLiteAdapter.queueAll();
 		listContent = (ListView) findViewById(R.id.listView);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
+		txt_logs = (TextView) findViewById(R.id.txtLogs_active);
+		txtTitle = (TextView) findViewById(R.id.txtTitle);
 
+		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
+		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
+		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
+		txt_info.setTypeface(font);
+		txt_graph.setTypeface(font);
+		txt_logs.setTypeface(font_normal);
+		txtTitle.setTypeface(font_bold);
+		
+		
 		String[] from = new String[] {SQLiteAdapter.TIME_IN,
 				SQLiteAdapter.TIME_OUT, SQLiteAdapter.START_PER,
 				SQLiteAdapter.END_PER,SQLiteAdapter.TIME_TAKEN,SQLiteAdapter.PERCENTAGE };
