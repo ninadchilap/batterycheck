@@ -21,6 +21,8 @@ public class Graph extends Activity implements SimpleGestureListener {
 
 	TextView txt_info, txt_logs, txt_graph, txtTitle;
 	private SimpleGestureFilter detector;
+	LinearLayout layout_logs, layout_info;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,6 +33,10 @@ public class Graph extends Activity implements SimpleGestureListener {
 		txt_graph = (TextView) findViewById(R.id.txtGraph_active);
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		
+		
+		layout_info=(LinearLayout)findViewById(R.id.layoutInfo_inactive);
+		layout_logs=(LinearLayout)findViewById(R.id.layoutLogs_inactive);
+		
 		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
 		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
 		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
@@ -39,7 +45,7 @@ public class Graph extends Activity implements SimpleGestureListener {
 		txt_logs.setTypeface(font);
 		txtTitle.setTypeface(font_bold);
 		
-		txt_info.setOnClickListener(new OnClickListener() {
+		layout_info.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
 			public void onClick(View v) {
@@ -53,7 +59,7 @@ public class Graph extends Activity implements SimpleGestureListener {
 			}
 		});
 
-		txt_logs.setOnClickListener(new OnClickListener() {
+		layout_logs.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
 			public void onClick(View v) {

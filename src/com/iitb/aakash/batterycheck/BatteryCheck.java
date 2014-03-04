@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 	TextView txt_logs, txt_graph;
 	SQLiteAdapter dbAdapter;
 	Cursor cursor;
+	LinearLayout layout_logs, layout_graph;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,9 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		 * findViewById(R.id.batterypercent); charging = (TextView)
 		 * findViewById(R.id.charging);
 		 */
-
+		layout_logs=(LinearLayout)findViewById(R.id.layoutLogs_inactive);
+		layout_graph=(LinearLayout)findViewById(R.id.layoutGraphs_inactive);
+		
 		txtStatus = (TextView) findViewById(R.id.txtStatus);
 		txtHealth = (TextView) findViewById(R.id.txtHealth);
 		txtTemp = (TextView) findViewById(R.id.txtTemperature);
@@ -94,7 +98,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		txtTitle.setTypeface(font_bold);
 		txt_info.setTypeface(font_normal);
 		
-		txt_graph.setOnClickListener(new OnClickListener() {
+		layout_graph.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
 			public void onClick(View v) {
@@ -108,7 +112,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 			}
 		});
 
-		txt_logs.setOnClickListener(new OnClickListener() {
+		layout_logs.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
 			public void onClick(View v) {

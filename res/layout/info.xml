@@ -85,6 +85,7 @@
             <!-- LOGS -->
 
             <LinearLayout
+                android:id="@+id/layoutLogs_inactive"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="4"
@@ -109,6 +110,7 @@
             
              <!-- GRAPH -->
             <LinearLayout
+                android:id="@+id/layoutGraphs_inactive"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="4"

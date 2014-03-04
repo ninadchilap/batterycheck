@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TableRow;
@@ -38,6 +39,7 @@ public class Logs extends Activity implements SimpleGestureListener {
 	TableRow logtable;
 	ListView listContent;
 	private SimpleGestureFilter detector;
+	LinearLayout layout_info, layout_graph;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class Logs extends Activity implements SimpleGestureListener {
 		cursor = mySQLiteAdapter.queueAll();
 		listContent = (ListView) findViewById(R.id.listView);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_inactive);
+		
+		layout_info=(LinearLayout)findViewById(R.id.layoutInfo_inactive);
+		layout_graph=(LinearLayout)findViewById(R.id.layoutGraphs_inactive);
 
 		txt_logs = (TextView) findViewById(R.id.txtLogs_active);
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -95,7 +100,7 @@ public class Logs extends Activity implements SimpleGestureListener {
 		this.registerReceiver(this.batteryLevelReceiver, new IntentFilter(
 				Intent.ACTION_BATTERY_CHANGED));
 
-		txt_info.setOnClickListener(new OnClickListener() {
+		layout_info.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -108,7 +113,7 @@ public class Logs extends Activity implements SimpleGestureListener {
 			}
 		});
 
-		txt_graph.setOnClickListener(new OnClickListener() {
+		layout_graph.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
 			public void onClick(View v) {
