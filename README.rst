@@ -15,6 +15,19 @@ This .csv file can be then transferred to PCs through USB cable.
 Historical analysis of battery charging cycles can be done through this data.
 
 
+Need for Battery Check Application
+------------------------------------
+
+The total number of Aakash tablets at IIT Bombay and that
+being dispatched by IIT Bombay are 1,00,000.
+The problem that we face and may face in future is the Battery Problem.
+Sometimes it takes too long to charge the battery of Aakash Tablet than
+the normal time and sometimes the battery of Aakash Tablet discharges too fast than normal time.
+So this may result in users demanding for change in battery of Aakash Tablet.
+So how will a user know there’s a need to change the battery of Aakash Tablet ?
+For this the user need an app!!!!!!
+
+
 
 
 Functionality
