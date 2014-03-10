@@ -61,6 +61,16 @@ Logs consists of following fields
 - % Charged: Shows the percentage difference between Start % and End %.
 
 
+**Graph**
+
+Graph shows the logs data in graphical view.
+
+- On x-axis there are charging cycles.
+- y axis consists of two parameters: Start % and End %
+- Red line represents Start % of the battery.
+- Green line represents End % of the battery.
+
+
 
 License
 -------
