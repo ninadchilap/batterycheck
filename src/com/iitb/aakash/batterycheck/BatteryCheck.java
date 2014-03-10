@@ -70,9 +70,9 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		 * findViewById(R.id.batterypercent); charging = (TextView)
 		 * findViewById(R.id.charging);
 		 */
-		layout_logs=(LinearLayout)findViewById(R.id.layoutLogs_inactive);
-		layout_graph=(LinearLayout)findViewById(R.id.layoutGraphs_inactive);
-		
+		layout_logs = (LinearLayout) findViewById(R.id.layoutLogs_inactive);
+		layout_graph = (LinearLayout) findViewById(R.id.layoutGraphs_inactive);
+
 		txtStatus = (TextView) findViewById(R.id.txtStatus);
 		txtHealth = (TextView) findViewById(R.id.txtHealth);
 		txtTemp = (TextView) findViewById(R.id.txtTemperature);
@@ -84,9 +84,12 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
 		txt_info = (TextView) findViewById(R.id.txtInfo_active);
 
-		Typeface font = Typeface.createFromAsset(getAssets(), "JosefinSlab-Light.ttf");
-		Typeface font_bold = Typeface.createFromAsset(getAssets(), "JosefinSlab-SemiBold.ttf");
-		Typeface font_normal = Typeface.createFromAsset(getAssets(), "JosefinSlab-Regular.ttf");
+		Typeface font = Typeface.createFromAsset(getAssets(),
+				"JosefinSlab-Light.ttf");
+		Typeface font_bold = Typeface.createFromAsset(getAssets(),
+				"JosefinSlab-SemiBold.ttf");
+		Typeface font_normal = Typeface.createFromAsset(getAssets(),
+				"JosefinSlab-Regular.ttf");
 		txtStatus.setTypeface(font);
 		txtHealth.setTypeface(font);
 		txtVolt.setTypeface(font);
@@ -97,7 +100,7 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		txtTech.setTypeface(font);
 		txtTitle.setTypeface(font_bold);
 		txt_info.setTypeface(font_normal);
-		
+
 		layout_graph.setOnClickListener(new OnClickListener() {
 
 			@SuppressLint("NewApi")
@@ -283,7 +286,6 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 		return true;
 	}
 
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -370,12 +372,12 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 
 	@Override
 	public void onSwipe(int direction) {
-		
+
 		switch (direction) {
 
 		case SimpleGestureFilter.SWIPE_RIGHT:
 			System.out.println("RIGHT");
-			
+
 			break;
 		case SimpleGestureFilter.SWIPE_LEFT:
 			System.out.println("LEFT");
@@ -385,12 +387,12 @@ public class BatteryCheck extends Activity implements SimpleGestureListener {
 					R.anim.anim_right_to_left1);
 			finish();
 			break;
-		
+
 		}
 	}
 
 	@Override
 	public void onDoubleTap() {
-		//Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
 	}
 }
