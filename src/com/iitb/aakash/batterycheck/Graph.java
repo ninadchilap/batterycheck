@@ -3,6 +3,7 @@ package com.iitb.aakash.batterycheck;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
@@ -11,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iitb.aakash.batterycheck.SimpleGestureFilter.SimpleGestureListener;
 import com.jjoe64.graphview.BarGraphView;
@@ -26,6 +29,9 @@ public class Graph extends Activity implements SimpleGestureListener {
 	TextView txt_info, txt_logs, txt_graph, txtTitle;
 	private SimpleGestureFilter detector;
 	LinearLayout layout_logs, layout_info;
+	private SQLiteAdapter mySQLiteAdapter;
+	SimpleCursorAdapter cursorAdapter;
+	Cursor cursor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,10 @@ public class Graph extends Activity implements SimpleGestureListener {
 		txt_logs = (TextView) findViewById(R.id.txtLogs_inactive);
 		txt_graph = (TextView) findViewById(R.id.txtGraph_active);
 		txtTitle = (TextView) findViewById(R.id.txtTitle);
+
+		mySQLiteAdapter = new SQLiteAdapter(this);
+		mySQLiteAdapter.openToRead();
+		cursor = mySQLiteAdapter.queueAll();
 
 		layout_info = (LinearLayout) findViewById(R.id.layoutInfo_inactive);
 		layout_logs = (LinearLayout) findViewById(R.id.layoutLogs_inactive);
@@ -79,61 +89,82 @@ public class Graph extends Activity implements SimpleGestureListener {
 			}
 		});
 
-		/*
-		 * // GRAPH DATA int num = 150; GraphViewData[] data = new
-		 * GraphViewData[num]; double v = 0; for (int i = 0; i < num; i++) { v
-		 * += 0.2; data[i] = new GraphViewData(i, Math.sin(v)); }
-		 * GraphViewSeries seriesSin = new GraphViewSeries("Sine", new
-		 * GraphViewSeriesStyle(Color.BLUE, 3), data);
-		 * 
-		 * // cos curve data = new GraphViewData[num]; v = 0; for (int i = 0; i
-		 * < num; i++) { v += 0.2; data[i] = new GraphViewData(i, Math.cos(v));
-		 * } GraphViewSeries seriesCos = new GraphViewSeries("Cosine", new
-		 * GraphViewSeriesStyle(Color.RED, 3), data);
-		 * 
-		 * GraphView graphView = new LineGraphView(this // context , "" //
-		 * heading ); // add data graphView.addSeries(seriesCos);
-		 * graphView.addSeries(seriesSin);
-		 */
+		// Getting graph data from database
+		int count = cursor.getCount();
+		GraphViewData[] start_per = new GraphViewData[count];
+		GraphViewData[] end_per = new GraphViewData[count];
+
+		GraphViewData[] High = new GraphViewData[count];
+		GraphViewData[] Low = new GraphViewData[count];
+
+		cursor.moveToFirst();
+
+		if (count == 0) {
+			High = new GraphViewData[1];
+			Low = new GraphViewData[1];
+
+			High[0] = new GraphViewData(0, 100);
+			Low[0] = new GraphViewData(0, 0);
+		}
+
+		for (int i = 0; i < count; i++) {
+			start_per[i] = new GraphViewData(i, Integer.parseInt(cursor
+					.getString(3)));
+
+			if (cursor.getString(4).equalsIgnoreCase("--"))
+				end_per[i] = new GraphViewData(i, Integer.parseInt(cursor
+						.getString(3)));
+			else
+				end_per[i] = new GraphViewData(i, Integer.parseInt(cursor
+						.getString(4)));
+
+			High[i] = new GraphViewData(i, 100);
+			Low[i] = new GraphViewData(i, 0);
+
+			cursor.moveToNext();
+		}
 
 		GraphViewSeries start_percent_series = new GraphViewSeries("Start %",
-				new GraphViewSeriesStyle(Color.RED, 0), new GraphViewData[] {
-						new GraphViewData(1, 10), new GraphViewData(2, 20),
-						new GraphViewData(3, 60), new GraphViewData(4, 30) });
+				new GraphViewSeriesStyle(Color.RED, 0), start_per);
 
 		GraphView graphView = new LineGraphView(this // context
-				, "GraphViewDemo" // heading
+				, ""// heading
 		);
 		graphView.addSeries(start_percent_series); // data
-		
-		GraphViewSeries end_percent_series = new GraphViewSeries("End %",
-				new GraphViewSeriesStyle(Color.GREEN, 0), new GraphViewData[] {
-						new GraphViewData(1, 40), new GraphViewData(2, 70),
-						new GraphViewData(3, 100), new GraphViewData(4, 60) });
 
-	
+		GraphViewSeries end_percent_series = new GraphViewSeries("End %",
+				new GraphViewSeriesStyle(Color.GREEN, 0), end_per);
 		graphView.addSeries(end_percent_series); // data
 
-		// optional - set view port, start=2, size=10
-		graphView.setViewPort(1, 5);
-		graphView.setScalable(false);
+		GraphViewSeries high_series = new GraphViewSeries(null,
+				new GraphViewSeriesStyle(Color.TRANSPARENT, 0), High);
+		graphView.addSeries(high_series); // data
+
+		GraphViewSeries low_series = new GraphViewSeries(null,
+				new GraphViewSeriesStyle(Color.TRANSPARENT, 0), Low);
+		graphView.addSeries(low_series); // data
+
+		graphView.setViewPort(0, 10);
 		// optional - legend
-		graphView.setShowLegend(true);
+		graphView.setShowLegend(false);
 		graphView.setScrollable(true);
 		// optional - activate scaling / zooming
 		graphView.setScalable(false);
 		graphView.getGraphViewStyle().setLegendBorder(20);
 		graphView.getGraphViewStyle().setLegendSpacing(30);
 		graphView.getGraphViewStyle().setLegendWidth(200);
-		
-		((LineGraphView) graphView).setDrawDataPoints(true);
-		((LineGraphView) graphView).setDataPointsRadius(15f);
-		
-		
-		graphView.getGraphViewStyle().setGridColor(Color.GRAY);
 
-		graphView.getGraphViewStyle().setNumHorizontalLabels(6);
-		graphView.getGraphViewStyle().setNumVerticalLabels(5);
+		((LineGraphView) graphView).setDrawDataPoints(true);
+		((LineGraphView) graphView).setDataPointsRadius(8f);
+
+		graphView.getGraphViewStyle().setNumHorizontalLabels(5);
+		graphView.getGraphViewStyle().setNumVerticalLabels(4);
+
+		graphView.getGraphViewStyle().setGridColor(Color.GRAY);
+		graphView.getGraphViewStyle().setTextSize(15f);
+
+		graphView.getGraphViewStyle().setNumHorizontalLabels(11);
+		graphView.getGraphViewStyle().setNumVerticalLabels(11);
 
 		graphView.getGraphViewStyle().setVerticalLabelsAlign(Align.CENTER);
 

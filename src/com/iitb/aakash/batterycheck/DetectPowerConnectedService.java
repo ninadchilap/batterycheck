@@ -57,26 +57,22 @@ public class DetectPowerConnectedService extends Service {
 
 			if (plugged == 1 || plugged == 2) {
 
-				if (cursor.getCount() == 0)
-				{
-					
+				if (cursor.getCount() == 0) {
+
 					mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
-							"--", curDate, "--/--/----","","");
-						
-				}
-				else
+							"--", curDate, "--/--/----", "", "");
+
+				} else
 
 				{
 					cursor.moveToPosition(cursor.getCount() - 1);
-					//Toast.makeText(getApplicationContext(), "Cursore string"+cursor.getString(5), Toast.LENGTH_SHORT).show();
-					
-					if (!(cursor.getString(6)).equals("--/--/----")) {
-						
-						mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
-								"--", curDate, "--/--/----","","");
-						//Toast.makeText(getApplicationContext(), "Cursore count "+(cursor.getCount() + 1), Toast.LENGTH_SHORT).show();
 
-					} 
+					if (!(cursor.getString(6)).equals("--/--/----")) {
+
+						mySQLiteAdapter.insert(curTime, "--:--:--", "" + level,
+								"--", curDate, "--/--/----", "", "");
+
+					}
 				}
 				updateList();
 				cursor.close();
@@ -91,7 +87,6 @@ public class DetectPowerConnectedService extends Service {
 	public void onCreate() {
 
 		super.onCreate();
-		Toast.makeText(this, "Inside on create", Toast.LENGTH_SHORT).show();
 		mySQLiteAdapter = new SQLiteAdapter(this);
 
 	}
@@ -105,8 +100,6 @@ public class DetectPowerConnectedService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-
-		Toast.makeText(this, "Inside on STart", Toast.LENGTH_SHORT).show();
 
 		today = Calendar.getInstance();
 		mySQLiteAdapter.openToWrite();
