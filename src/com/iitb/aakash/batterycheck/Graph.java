@@ -144,7 +144,7 @@ public class Graph extends Activity implements SimpleGestureListener {
 				new GraphViewSeriesStyle(Color.TRANSPARENT, 0), Low);
 		graphView.addSeries(low_series); // data
 
-		graphView.setViewPort(0, 10);
+		graphView.setViewPort(1, 30);
 		// optional - legend
 		graphView.setShowLegend(false);
 		graphView.setScrollable(true);
@@ -155,15 +155,15 @@ public class Graph extends Activity implements SimpleGestureListener {
 		graphView.getGraphViewStyle().setLegendWidth(200);
 
 		((LineGraphView) graphView).setDrawDataPoints(true);
-		((LineGraphView) graphView).setDataPointsRadius(8f);
+		((LineGraphView) graphView).setDataPointsRadius(5f);
 
-		graphView.getGraphViewStyle().setNumHorizontalLabels(5);
-		graphView.getGraphViewStyle().setNumVerticalLabels(4);
+		/*graphView.getGraphViewStyle().setNumHorizontalLabels(5);
+		graphView.getGraphViewStyle().setNumVerticalLabels(4);*/
 
 		graphView.getGraphViewStyle().setGridColor(Color.GRAY);
-		graphView.getGraphViewStyle().setTextSize(15f);
+		graphView.getGraphViewStyle().setTextSize(12f);
 
-		graphView.getGraphViewStyle().setNumHorizontalLabels(11);
+		graphView.getGraphViewStyle().setNumHorizontalLabels(31);
 		graphView.getGraphViewStyle().setNumVerticalLabels(11);
 
 		graphView.getGraphViewStyle().setVerticalLabelsAlign(Align.CENTER);
